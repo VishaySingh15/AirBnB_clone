@@ -1,11 +1,11 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
 Unittests for basemodel class
 """
 
 import unittest
 import datetime
-from models import base_model
+from models.base_model import BaseModel
 
 class TestBaseModel(unittest.TestCase):
     """
@@ -17,7 +17,7 @@ class TestBaseModel(unittest.TestCase):
         Test the creation of an instance
         """
 
-        self.bm = base_model.BaseModel()
+        self.bm = BaseModel()
         self.assertTrue(self.bm.__class__.__name__, "BaseModel")
 
     def test_save(self):
@@ -25,7 +25,7 @@ class TestBaseModel(unittest.TestCase):
         This method tests the save functionality
         """
 
-        self.bm = base_model.BaseModel()
+        self.bm = BaseModel()
         self.bm.save()
         self.assertGreater(self.bm.updated_at, self.bm.created_at)
 
@@ -34,7 +34,7 @@ class TestBaseModel(unittest.TestCase):
         This method tests the uuid type
         """
 
-        self.bm = base_model.BaseModel()
+        self.bm = BaseModel()
         self.assertEqual((type(self.bm.id)), str)
 
     def test_create_from_dict(self):
@@ -48,8 +48,8 @@ class TestBaseModel(unittest.TestCase):
                 'my_number': 89, 
                 'updated_at': '2017-09-28T21:03:54.052302', 
                 'name': 'My_First_Model'}
-        self.bm = base_model.BaseModel(**my_model_json)
-        self.bm2 = base_model.BaseModel()
+        self.bm = BaseModel(**my_model_json)
+        self.bm2 = BaseModel()
         self.assertEqual(type(self.bm.created_at), datetime.datetime)
         self.assertNotEqual(self.bm, self.bm2)
 
