@@ -6,6 +6,7 @@ This module contains the entry point of the command interpreter
 """
 import cmd
 from models.base_model import BaseModel
+from models.user import User
 from models import storage
 
 
@@ -15,6 +16,7 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = "(hbnb) "
+    __CLASS_LIST = ["BaseModel", "User"]
 
     def do_quit(self, line):
 
@@ -44,16 +46,16 @@ class HBNBCommand(cmd.Cmd):
 
         pass
 
-    def do_create(self, class_name=None):
+    def do_create(self, class_name):
         if not class_name:
             print("** class name missing **")
-        elif class_name != "BaseModel":
+        elif class_name not in HBNBCommand.__CLASS_LIST:
             print("** class doesn't exist **")
         else:
-            self.bm = BaseModel()
-            storage.new(self.bm)
+            exec("self.obj=" + class_name + "()")
+            storage.new(self.obj)
             storage.save()
-            print(self.bm.id)
+            print(self.obj.id)
 
     def help_create(self):
         """
@@ -65,7 +67,7 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, line):
         if not line:
             print("** class name missing **")
-        elif line.split()[0] != "BaseModel":
+        elif line.split()[0] not in HBNBCommand.__CLASS_LIST:
             print("** class doesn't exist **")
         elif len(line.split()) < 2:
             print("** instance id missing **")
@@ -86,7 +88,7 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, line):
         if not line:
             print("** class name missing **")
-        elif line.split()[0] != "BaseModel":
+        elif line.split()[0] not in HBNBCommand.__CLASS_LIST:
             print("** class doesn't exist **")
         elif len(line.split()) < 2:
             print("** instance id missing **")
@@ -106,7 +108,7 @@ class HBNBCommand(cmd.Cmd):
         print("destroy [class name] [instance ID]\n")
 
     def do_all(self, line):
-        if line not in ["BaseModel", ""]:
+        if line not in HBNBCommand.__CLASS_LIST and line:
             print("** class doesn't exist **")
         else:
             all_inst = []
@@ -124,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         if not line:
             print("** class name missing **")
-        elif line.split()[0] != "BaseModel":
+        elif line.split()[0] not in HBNBCommand.__CLASS_LIST:
             print("** class doesn't exist **")
         elif len(line.split()) < 2:
             print("** instance id missing **")
