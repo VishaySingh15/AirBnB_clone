@@ -25,6 +25,7 @@ class FileStorage():
         This method returns all objects
         """
 
+        FileStorage.reload(self)
         return self.__objects
 
     def new(self, obj):
