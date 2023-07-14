@@ -7,6 +7,11 @@ This module contains the entry point of the command interpreter
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from models import storage
 
 
@@ -16,7 +21,7 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = "(hbnb) "
-    __CLASS_LIST = ["BaseModel", "User"]
+    __CLASS_LIST = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
 
     def do_quit(self, line):
 
@@ -113,7 +118,8 @@ class HBNBCommand(cmd.Cmd):
         else:
             all_inst = []
             for key, value in storage.all().items():
-                all_inst.append(str(value))
+                if line in key:
+                    all_inst.append(str(value))
             print(all_inst)
 
     def help_all(self):
