@@ -25,7 +25,6 @@ class FileStorage():
         This method returns all objects
         """
 
-        FileStorage.reload(self)
         return self.__objects
 
     def new(self, obj):
@@ -42,10 +41,11 @@ class FileStorage():
         This method serializes the objects dict list to the file
         """
 
+        objects_dict = {}
         with open(self.__file_path, "w", encoding="utf-8") as f:
             for key, value in self.__objects.items():
-                self.__objects[key] = value.to_dict()
-            json.dump(self.__objects, f)
+                objects_dict[key] = value.to_dict()
+            json.dump(objects_dict, f)
 
     def reload(self):
         """
@@ -54,7 +54,9 @@ class FileStorage():
 
         if os.path.isfile(self.__file_path) and os.path.getsize(self.__file_path) != 0:
             with open(self.__file_path, "r", encoding="utf-8") as f:
-                self.__objects = json.load(f)
+                objects = json.load(f)
             from models.base_model import BaseModel
-            for obj_id in self.__objects:
-                self.__objects[obj_id] = BaseModel(**self.__objects[obj_id])
+            from models.user import User
+            for obj_id in objects:
+                exec("objects[obj_id] = " + obj_id.split('.')[0] + "(**" + str(objects[obj_id]) + ")")
+            self.__objects = objects
