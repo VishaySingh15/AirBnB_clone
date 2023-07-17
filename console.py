@@ -21,7 +21,9 @@ class HBNBCommand(cmd.Cmd):
     """
 
     prompt = "(hbnb) "
-    __CLASS_LIST = ["BaseModel", "User", "State", "City", "Amenity", "Place", "Review"]
+    __CLASS_LIST = [
+     "BaseModel", "User", "State", "City", "Amenity", "Place", "Review"
+    ]
 
     def do_quit(self, line):
 
@@ -158,6 +160,7 @@ class HBNBCommand(cmd.Cmd):
         """
 
         print("update [class name] [instance ID] [attribute] [value]\n")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
