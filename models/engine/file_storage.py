@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 """
 
-This Module defines the class FileStorage which serializes instances to JSON and vice versa
+This Module defines the class FileStorage
+which serializes instances to JSON and vice versa
 
 """
 import json
 import os.path
+
 
 class FileStorage():
     """
