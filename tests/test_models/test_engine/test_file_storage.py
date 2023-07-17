@@ -20,7 +20,7 @@ class TestFileStorage(unittest.TestCase):
         FileStorage
         """
 
-        self.storage = FileStorage("/AirBnB_clone/tests/test_models/file.json")
+        self.storage = FileStorage("../../../file.json")
         self.bm = BaseModel()
 
     def test_create_storage_instance(self):
