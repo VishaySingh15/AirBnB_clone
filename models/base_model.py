@@ -8,6 +8,7 @@ import datetime
 import uuid
 from models import storage
 
+
 class BaseModel():
     """
     This class serves as a base model for all other classes
@@ -15,15 +16,18 @@ class BaseModel():
 
     def __init__(self, *args, **kwargs):
         """
-        This method instantiates the object, initializes the public instance attributes
-        id, created_at, updated_at for new objects; and updates the storage object list with a new object, 
+        This method instantiates the object,
+        initializes the public instance attributes
+        id, created_at, updated_at for new objects;
+        and updates the storage object list with a new object,
         otherwise re-creates an existing object from kwargs.
         """
 
         if kwargs:
             for key, value in kwargs.items():
                 if key in ["created_at", "updated_at"]:
-                    value = datetime.datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                    date_format = "%Y-%m-%dT%H:%M:%S.%f"
+                    value = datetime.datetime.strptime(value, date_format)
                 if key != "__class__":
                     exec("self." + key + '=value')
         else:
