@@ -15,7 +15,7 @@ class FileStorage():
     This class serializes and deserializes instances and JSON
     """
 
-    def __init__(self, file_path=None):
+    def __init__(self, file_path="file.json"):
         """
         This method initializes an instance
         """
