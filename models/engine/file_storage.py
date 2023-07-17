@@ -52,7 +52,9 @@ class FileStorage():
         This method deserializes the JSON file to the dict list
         """
 
-        if os.path.isfile(self.__file_path) and os.path.getsize(self.__file_path) != 0:
+        file_path = os.path.isfile(self.__file_path)
+        file_contents = os.path.getsize(self.__file_path)
+        if file_path and file_contents != 0:
             with open(self.__file_path, "r", encoding="utf-8") as f:
                 objects = json.load(f)
             from models.base_model import BaseModel
@@ -63,5 +65,7 @@ class FileStorage():
             from models.place import Place
             from models.review import Review
             for obj_id in objects:
-                exec("objects[obj_id] = " + obj_id.split('.')[0] + "(**" + str(objects[obj_id]) + ")")
+                cls = obj_id.split('.')[0]
+                args = str(objects[obj_id])
+                exec("objects[obj_id] = " + cls + "(**" + args + ")")
             self.__objects = objects
