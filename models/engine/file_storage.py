@@ -1,11 +1,13 @@
 #!/usr/bin/python3
 """
 
-This Module defines the class FileStorage which serializes instances to JSON and vice versa
+This Module defines the class FileStorage
+which serializes instances to JSON and vice versa
 
 """
 import json
 import os.path
+
 
 class FileStorage():
     """
@@ -53,8 +55,7 @@ class FileStorage():
         """
 
         file_path = os.path.isfile(self.__file_path)
-        file_contents = os.path.getsize(self.__file_path)
-        if file_path and file_contents != 0:
+        if file_path and os.path.getsize(self.__file_path) != 0:
             with open(self.__file_path, "r", encoding="utf-8") as f:
                 objects = json.load(f)
             from models.base_model import BaseModel
